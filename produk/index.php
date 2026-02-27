@@ -1,6 +1,3 @@
-<?php
-    include("../ceklogin.php");
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,7 +29,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">Nama</th>
+                                    <th scope="col">Nama Produk</th>
                                     <th scope="col">Harga</th>
                                     <th scope="col">Stok</th>
                                     <th scope="col">Action</th>
@@ -44,8 +41,7 @@
                                 include("../koneksi.php");
 
                                 #2. menulikan query menampilkan data
-                                $qry = "SELECT * FROM produk";
-
+                                $qry = "SELECT *, biodata.id AS ids FROM biodata INNER JOIN jurusan ON biodata.jurusans_id = jurusan.id_jurusan inner join gelombang_pendaftaran on biodata.gelombangs_id = gelombang_pendaftaran.id";
                                 #3. menjalankan query
                                 $tampil = mysqli_query($koneksi, $qry);
 
@@ -60,12 +56,49 @@
                                         <td><?= $data['harga'] ?></td>
                                         <td><?= $data['stok'] ?></td>
                                         <td>
+                                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $data['ids'] ?>"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                            <a href="formedit.php?id=<?= $data['ids'] ?>" class="btn btn-info btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalhapus<?= $data['ids'] ?>"><i class="fa-solid fa-trash"></i></button>
 
-                                            <a href="formedit.php?id=<?= $data['id_produk'] ?>" class="btn btn-info btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
-                                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalhapus<?= $data['id_produk'] ?>"><i class="fa-solid fa-trash"></i></button>
+                                            <!-- Modal Detail-->
+                                            <div class="modal fade" id="exampleModal<?= $data['ids'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Data Detail <?= $data['nama_produk'] ?></h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <table class="table">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td colspan="2"><img src="../foto_produk/<?= $data['foto_produk'] ?>" height="150" alt=""></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Nama produk</td>
+                                                                        <th scope="row"><?= $data['nama_produk'] ?></th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Harga</td>
+                                                                        <th scope="row"><?= $data['harga'] ?></th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Stok </td>
+                                                                        <th scope="row"><?= $data['stok'] ?></th>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                             <!-- Modal Hapus-->
-                                            <div class="modal fade" id="modalhapus<?= $data['id_produk'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="modalhapus<?= $data['ids'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -73,11 +106,11 @@
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Yakin Data Jurusan <?= $data['nama_produk'] ?> Ingin Dihapus?
+                                                            Yakin Data Dengan Nama <?= $data['nama_produk'] ?> Ingin Dihapus?
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            <a href="proseshapus.php?id=<?= $data['id_produk'] ?>" class="btn btn-danger">Hapus</a>
+                                                            <a href="proseshapus.php?id=<?= $data['ids'] ?>" class="btn btn-danger">Hapus</a>
                                                         </div>
                                                     </div>
                                                 </div>

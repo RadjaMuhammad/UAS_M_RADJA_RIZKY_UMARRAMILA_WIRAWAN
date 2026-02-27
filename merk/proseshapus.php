@@ -3,10 +3,10 @@
     include_once("../koneksi.php");
 
     #2. ID hapus
-    $idhapus = $_GET['id_produk'];
+    $idhapus = $_GET['id_merk'];
 
     #3. menulis query
-    $qry = "DELETE FROM produk WHERE id_produk='$idhapus'";
+    $qry = "DELETE FROM merk WHERE id_merk='$idhapus'";
 
     #4. menjalan query
     $hapus = mysqli_query($koneksi,$qry);
