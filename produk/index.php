@@ -41,7 +41,13 @@
                                 include("../koneksi.php");
 
                                 #2. menulikan query menampilkan data
-                                $qry = "SELECT *, biodata.id AS ids FROM biodata INNER JOIN jurusan ON biodata.jurusans_id = jurusan.id_jurusan inner join gelombang_pendaftaran on biodata.gelombangs_id = gelombang_pendaftaran.id";
+                                $qry = "SELECT produk.*, 
+               kategori.nama_kategori, 
+               merk.nama_merk,
+               produk.id_produk AS ids
+        FROM produk
+        LEFT JOIN merk ON produk.id_merk = merk.id_merk
+        LEFT JOIN kategori ON produk.id_kategori = kategori.id_kategori";
                                 #3. menjalankan query
                                 $tampil = mysqli_query($koneksi, $qry);
 
@@ -57,7 +63,7 @@
                                         <td><?= $data['stok'] ?></td>
                                         <td>
                                             <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $data['ids'] ?>"><i class="fa-solid fa-magnifying-glass"></i></button>
-                                            <a href="formedit.php?id=<?= $data['ids'] ?>" class="btn btn-info btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            <a href="formedit.php?id_produk=<?= $data['ids'] ?>" class="btn btn-info btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
                                             <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalhapus<?= $data['ids'] ?>"><i class="fa-solid fa-trash"></i></button>
 
                                             <!-- Modal Detail-->
@@ -86,6 +92,15 @@
                                                                         <td>Stok </td>
                                                                         <th scope="row"><?= $data['stok'] ?></th>
                                                                     </tr>
+                                                                    <tr>
+                                                                        <td>Kategori </td>
+                                                                        <th scope="row"><?= $data['nama_kategori'] ?></th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Merk </td>
+                                                                        <th scope="row"><?= $data['nama_merk'] ?></th>
+                                                                    </tr>
+
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -110,7 +125,7 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            <a href="proseshapus.php?id=<?= $data['ids'] ?>" class="btn btn-danger">Hapus</a>
+                                                            <a href="proseshapus.php?id_produk=<?= $data['ids'] ?>" class="btn btn-danger">Hapus</a>
                                                         </div>
                                                     </div>
                                                 </div>
