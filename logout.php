@@ -1,6 +1,14 @@
-<?php 
+<?php
 session_start();
+
+// Hapus semua session
+session_unset();
 session_destroy();
-setcookie("coo_email",$email,time()-(3600*24*30),"/");
-header("location:login.php");
+
+// Hapus cookie jika ada
+setcookie("coo_user", "", time() - 3600, "/");
+
+// Redirect ke login
+header("Location: login.php");
+exit;
 ?>

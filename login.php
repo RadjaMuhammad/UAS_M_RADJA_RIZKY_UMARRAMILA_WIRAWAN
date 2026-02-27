@@ -1,42 +1,47 @@
 <?php
 session_start();
 $pesan = "";
-
 if (isset($_POST['tombol'])) {
+    //proses login
 
+    #1. koneksi
     include("koneksi.php");
 
-    $username = $_POST['email']; // tetap pakai name=email di form
-    $password = md5($_POST['pass']);
+    #2. mengambil value data input
+    $email = $_POST['username'];
+    $pass = md5($_POST['pass']);
 
-    $qry = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+    #3. cek apakah email dan password ada di database
+    $qry = "SELECT * FROM users WHERE username='$email' AND pass='$pass'";
     $result = mysqli_query($koneksi, $qry);
     $cek_login = mysqli_num_rows($result);
 
     if ($cek_login == 0) {
+        //login gagal
         $pesan = "Login Gagal";
     } else {
-
-        if (isset($_POST['cek']) && $_POST['cek'] == "yes") {
-            setcookie("coo_user", $username, time() + (3600 * 24 * 30), "/");
+        //login berhasil
+        $pesan = "Login berhasil";
+        // SESSION & COOKIE
+        if (isset($_POST['cek']) == "yes") {
+            //simpan cookie
+            setcookie("coo_email", $email, time() + (3600 * 24 * 30), "/");
+            header("location:index.php");
         } else {
-            $_SESSION['ses_user'] = $username;
+            //simpan session
+            $_SESSION['ses_email'] = $email;
+            header("location:index.php");
         }
-
-        header("location:index.php");
-        exit;
     }
 }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Biodata Siswa</title>
+    <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
@@ -56,13 +61,13 @@ if (isset($_POST['tombol'])) {
                         <form action="login.php" method="post">
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                <input type="email" name="email" class="form-control" id="exampleInputEmail1"
+                                <input type="email" name="username" class="form-control" id="exampleInputEmail1"
                                     aria-describedby="emailHelp">
 
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                                <input type="pass" name="pass" class="form-control" id="exampleInputPassword1">
+                                <input type="password" name="pass" class="form-control" id="exampleInputPassword1">
                             </div>
                             <div class="mb-3 form-check">
                                 <input type="checkbox" name="cek" value="yes" class="form-check-input"

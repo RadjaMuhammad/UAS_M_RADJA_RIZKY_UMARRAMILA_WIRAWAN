@@ -11,7 +11,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
 </head>
 
 <body style="background-color:#d1e6d4">
@@ -25,7 +26,7 @@
                 <div class="card shadow p-3 mb-5 bg-body-tertiary rounded">
                     <div class="card-header">
                         <b>MERK</b>
-                        <a href="form_tambah.php" class="float-end btn btn-primary btn-sm"><i class="fa-solid fa-user-plus"></i> Tambah Data</a>
+                        <a href="form_tambah.php" class="float-end btn btn-primary btn-sm"><i class="bi bi-plus"></i> Tambah Data</a>
                     </div>
                     <div class="card-body">
                         <table class="table">
@@ -57,8 +58,8 @@
                                         <td><?= $data['nama_merk'] ?></td>
                                         <td>
 
-                                            <a href="formedit.php?id_merk=<?= $data['id_merk'] ?>" class="btn btn-info btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
-                                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalhapus<?= $data['id_merk'] ?>"><i class="fa-solid fa-trash"></i></button>
+                                            <a href="formedit.php?id_merk=<?= $data['id_merk'] ?>" class="btn btn-info btn-sm"><i class="bi bi-pen"></i></a>
+                                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalhapus<?= $data['id_merk'] ?>"><i class="bi bi-trash"></i></button>
 
                                             <!-- Modal Hapus-->
                                             <div class="modal fade" id="modalhapus<?= $data['id_merk'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
